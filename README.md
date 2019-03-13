@@ -1,4 +1,4 @@
-n# N-W-S
+# N-W-S
 A naval battle game made with CLion for my learning
 
 Author  : Fardel Bastien
@@ -33,4 +33,4 @@ The game was inspired by the board game
 with a friend and tried guessing where
 they put their boats and the first one
 to sink all the enemy's boats was the
-winer.
+winner.
