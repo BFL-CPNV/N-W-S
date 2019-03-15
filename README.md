@@ -1,9 +1,10 @@
 # N-W-S
 A naval battle game made with CLion for my learning
 
-Author  : Fardel Bastien
-Address : Bastien.FARDEL@cpnv.ch
-Version : 1.0
+Author        : Fardel Bastien
+Beta testers  : Gacon Kevin 
+Address       : Bastien.FARDEL@cpnv.ch
+Version       : 1.0
 
 -- How to install this game ? -- 
 There's no need to install the game as it
