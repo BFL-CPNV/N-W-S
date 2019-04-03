@@ -276,7 +276,30 @@ void infoMenu(int Choice) {
 } //This function shows the Info Menu
 
 void aboutUsMenu(int Choice) {
-    //W.I.P.
+   if (Choice == 4) {
+        system("CLS");
+
+        printf("======================================================================\n");
+        printf("\t\t\t  About Us [N.W.S.]\n");
+        printf("======================================================================\n");
+        printf("I, the developper, am a first year at the CPNV and I'm looking to\n");
+        printf("become an IT, and so I had to make this game as a test in my learning.\n");
+        printf("======================================================================\n");
+        printf("Developper      : Fardel Bastien\n");
+        printf("Email Address   : bastien.fardel@cpnv.ch\n");
+        printf("======================================================================\n");
+        printf("Testers         : Gacon Kevin\n");
+        printf("Email Address   : gacon.kevin@cpnv.ch\n");
+        printf("======================================================================\n");
+        printf("Head of project : Benzonana Pascal\n");
+        printf("Email Address   : benzonana.pascal@cpnv.ch\n");
+        printf("======================================================================\n");
+        printf("Expert          : Xavier Carrel\n");
+        printf("Email Address   : xavier.carrel@cpnv.ch\n");
+        printf("======================================================================\n");
+        system("PAUSE");
+        system("CLS");
+    }
 } //This function shows the About Us Menu
 
 void showGrid() {
