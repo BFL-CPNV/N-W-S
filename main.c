@@ -23,31 +23,12 @@
 //| This program was created for a project of the developper's         |
 //| learning.                                                          |
 //======================================================================
-//======================================================================
-//**********************************************************************
-//0101010101000011100000100001000011100001000010001000000111100001001001
-//**********************************************************************
-//======================================================================
-//======================================================================
-//|                           TO DO LIST                               |
-//|--------------------------------------------------------------------|
-//| 1.  Add a functional menu              status : 90% done           |
-//| 2.  Add an help menu for the game      status : DONE               |
-//| 3.  Add a static map for testing       status : DONE               |
-//| 4.  Add a gaming mechanic              status : DONE               |
-//| 5.  Verify the program                 status : In progress        |
-//| 6.  Create maps to be used randomly    status : To do              |
-//| 7.  Verify the program                 status : To do              |
-//| 8.  Create a logging system            status : To do              |
-//| 9.  Create an Highscores board         status : To do              |
-//| 10. Verify the program                 status : To do              |
-//| 11. Check with the client              status : To do              |
-//======================================================================
-//======================================================================
+
 
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_LINES 8
 #define MAX_COLUMNS 10
@@ -58,6 +39,7 @@
 #define SUBMARINES_HEALTH 6
 #define ENFORCER_HEALTH 2
 #define RECON_HEALTH 1
+#define TAILLE_MAX 100
 
 int StaticMap[9][11] = { //This array is the static grid, each numbers represent different object
         1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 1,        //5 is a Recon wich takes 1 case
@@ -71,23 +53,126 @@ int StaticMap[9][11] = { //This array is the static grid, each numbers represent
         8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1
 };
 
+void showScoreboard() {
 
-int winningCondition(int shots_fired, int missed_shots, int total_hp, char name_transfer) {
-    int Win = 0;
+    FILE *Pseudo = NULL;
+    FILE *Shots = NULL;
+    FILE *Missed = NULL;
+
+    char shots[TAILLE_MAX] = "";
+
+    char missed[TAILLE_MAX] = "";
+
+    char pseudo[TAILLE_MAX] = "";
+
+    Pseudo = fopen("P:\\CLion_Projects\\Sandbox\\MA-20\\N.W.S\\cmake-build-debug\\Pseudo.txt", "r");
+
+    if (Pseudo != NULL) {
+        fgets(pseudo, TAILLE_MAX, Pseudo);
+        fclose(Pseudo);
+    } else {
+        printf("[Impossible de lire le fichier Pseudo.txt !]\n");
+    }
+
+    Shots = fopen("P:\\CLion_Projects\\Sandbox\\MA-20\\N.W.S\\cmake-build-debug\\Tirs.txt", "r");
+
+    if (Shots != NULL) {
+        fgets(shots, TAILLE_MAX, Shots);
+        fclose(Shots);
+    } else {
+        printf("[Impossible de lire le fichier Tirs.txt !]\n");
+    }
+
+    Missed = fopen("P:\\CLion_Projects\\Sandbox\\MA-20\\N.W.S\\cmake-build-debug\\Rates.txt", "r");
+
+    if (Missed != NULL) {
+        fgets(missed, TAILLE_MAX, Missed);
+        fclose(Missed);
+    } else {
+        printf("[Impossible de lire le fichier Rates.txt !]\n");
+    }
+
+
+    printf("======================================================================\n");
+    printf("                        _                         _ \n"
+           "                       | |                       | |\n"
+           " ___  ___ ___  _ __ ___| |__   ___   __ _ _ __ __| |\n"
+           "/ __|/ __/ _ \\| '__/ _ \\ '_ \\ / _ \\ / _` | '__/ _` |\n"
+           "\\__ \\ (_| (_) | | |  __/ |_) | (_) | (_| | | | (_| |\n"
+           "|___/\\___\\___/|_|  \\___|_.__/ \\___/ \\__,_|_|  \\__,_|\n"
+           "                                                    \n");
+    printf("======================================================================\n");
+    printf("Username                     Shots Fired                  Missed Shots\n");
+    printf("[%s]                         [%s]                     [%s]\n", pseudo, shots, missed);
+    printf("======================================================================\n");
+
+    system("PAUSE");
+    system("CLS");
+
+} //This function will show the last user and his score
+
+int winningCondition(int shots_fired, int missed_shots, int total_hp, char *name_transfer) {
+    int Win = 0, shots = 0, missed = 0;
+    char pseudo[TAILLE_MAX] = "";
+
+    strcpy(pseudo, name_transfer);
+
+    shots = shots_fired;
+    missed = missed_shots;
+
+    FILE *Pseudo = NULL;
+    FILE *Shots = NULL;
+    FILE *Missed = NULL;
 
     if (total_hp == 0) { //winning dialogue
         printf("[Radio Command] Seems like we got em all, we got no more hostile activity on the radar.\n");
         printf("You: Well that was easy ! Let's leave this sea and rest.\n");
         getch();
-        printf("===================================================================================================================\n");
-        printf(" ****   ****   **   *    ****   ****    ****   *******   *    *   *      ****   *******    *****     ****    **   *\n");
-        printf("*      *    *  * *  *   *       *   *  *    *     *      *    *   *     *    *     *         *      *    *   * *  *\n");
-        printf("*      *    *  *   **   *   *   ****   ******     *      *    *   *     ******     *         *      *    *   *   **\n");
-        printf(" ****   ****   *    *    ****   *   *  *    *     *       ****    ****  *    *     *       *****     ****    *    *\n");
-        printf("===================================================================================================================\n");
-        //printf("User %s won, you shot %d times and missed %d times.\n", name_transfer, shots_fired, missed_shots);
+
+        system("CLS");
+
+        printf("=================================================================================\n");
+        printf("                                 _         _       _   _                 \n"
+               "                                | |       | |     | | (_)                \n"
+               "  ___ ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___ \n"
+               " / __/ _ \\| '_ \\ / _` | '__/ _` | __| | | | |/ _` | __| |/ _ \\| '_ \\/ __|\n"
+               "| (_| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \\__ \\\n"
+               " \\___\\___/|_| |_|\\__, |_|  \\__,_|\\__|\\__,_|_|\\__,_|\\__|_|\\___/|_| |_|___/\n"
+               "                  __/ |                                                  \n"
+               "                 |___/                                                   \n");
+        printf("=================================================================================\n");
+        printf("User %s won, you shot %d times and missed %d times.\n", name_transfer, shots_fired, missed_shots);
         printf("Congratulation ! And most importantly...\n");
         printf("OwO [T H A N K  Y O U  F O R  P L A Y I N G] OwO\n");
+
+        //Writes the score info on an external file
+        Pseudo = fopen("cmake-build-debug\\Pseudo.txt", "w");
+
+        if (Pseudo != NULL) {
+            fprintf(Pseudo, "%s", pseudo);
+            fclose(Pseudo);
+        } else {
+            printf("[Impossible d'enregistrer l'utilisateur dans le fichier Pseudo.txt !]\n");
+        }
+
+        Shots = fopen("cmake-build-debug\\Tirs.txt", "w");
+
+        if (Shots != NULL) {
+            fprintf(Shots, "%d", shots);
+            fclose(Shots);
+        } else {
+            printf("[Impossible d'enregistrer le nombre de tirs dans le fichier Tirs.txt !]\n");
+        }
+
+        Missed = fopen("cmake-build-debug\\Rates.txt", "w");
+
+        if (Missed != NULL) {
+            fprintf(Missed, "%d", missed);
+            fclose(Missed);
+        } else {
+            printf("[Impossible d'enregistrer le nombre d'echecs (tirs) dans le fichier Rates.txt !]\n");
+        }
+
         system("PAUSE");
         system("CLS");
         Win = 1;
@@ -97,11 +182,10 @@ int winningCondition(int shots_fired, int missed_shots, int total_hp, char name_
 
 void showMenu() {
     printf("[1] Help\n");
-    printf("[2] Settings\n");
-    printf("[3] Info\n");
-    printf("[4] About us\n");
-    printf("[5] Play\n");
-    printf("[6] Quit\n");
+    printf("[2] Info\n");
+    printf("[3] About us\n");
+    printf("[4] Play\n");
+    printf("[5] Quit\n");
 } //This function shows the available options of the menu
 
 void helpMenu(int Choice) {
@@ -110,9 +194,9 @@ void helpMenu(int Choice) {
     switch (Choice) {
         case 1: //This case shows the help menu and its content
 
-            while (Choice2 != 8) { //This will keep repeating so that the user doesn't have to reopen the help menu
+            while (Choice2 != 6) { //This will keep repeating so that the user doesn't have to reopen the help menu
                 //each times he choose a question, however he can go back to the main menu if he
-                //inputs the number [8], Go back to main menu
+                //inputs the number [6], Go back to main menu
 
                 system("CLS");
 
@@ -121,12 +205,10 @@ void helpMenu(int Choice) {
                 printf("======================================================================\n");
                 printf("[1] How to play\n");
                 printf("[2] How to start playing\n");
-                printf("[3] How to enable the A.I.\n");
-                printf("[4] Info button\n");
-                printf("[5] About us button\n");
-                printf("[6] Settings button\n");
-                printf("[7] Game not working\n");
-                printf("[8] Go back to main menu\n");
+                printf("[3] Info button\n");
+                printf("[4] About us button\n");
+                printf("[5] Game not working\n");
+                printf("[6] Go back to main menu\n");
                 printf("======================================================================\n");
                 printf("Your choice : ");
                 scanf("%d", &Choice2);
@@ -160,19 +242,8 @@ void helpMenu(int Choice) {
 
                         break;
 
-                    case 3: //How to enable the A.I. [3]
 
-                        system("CLS");
-
-                        printf("======================================================================\n");
-                        printf("Error, file //sc-c133-pc15//users//NWS_A.I. doesn't exist yet\n");
-                        printf("======================================================================\n");
-
-                        system("PAUSE");
-
-                        break;
-
-                    case 4: //Info button [4]
+                    case 3: //Info button [3]
 
                         system("CLS");
 
@@ -186,7 +257,7 @@ void helpMenu(int Choice) {
 
                         break;
 
-                    case 5: //About us button [5]
+                    case 4: //About us button [4]
 
                         system("CLS");
 
@@ -199,20 +270,7 @@ void helpMenu(int Choice) {
 
                         break;
 
-                    case 6: //Settings button [6]
-
-                        system("CLS");
-
-                        printf("======================================================================\n");
-                        printf("The Settings button ([2]) of the main menu will let you change a few\n");
-                        printf("things in the game suchs as activating the A.I., etc...\n");
-                        printf("======================================================================\n");
-
-                        system("PAUSE");
-
-                        break;
-
-                    case 7: //Game not working [7]
+                    case 5: //Game not working [5]
 
                         system("CLS");
 
@@ -229,7 +287,7 @@ void helpMenu(int Choice) {
 
                         break;
 
-                    case 8:
+                    case 6:
                         break;
 
                     default: //Default case if a number that isn't part of the options is chosen by the user
@@ -251,13 +309,9 @@ void helpMenu(int Choice) {
 
 } //This function shows Help menu
 
-void settingsMenu(int Choice) {
-    //W.I.P.
-} //This function shows the Settings Menu
-
 void infoMenu(int Choice) {
 
-    if (Choice == 3) {
+    if (Choice == 2) {
         system("CLS");
 
         printf("=======================================================================\n");
@@ -267,6 +321,10 @@ void infoMenu(int Choice) {
         printf("Version        : 1.0\n");
         printf("Known bugs     : When typing a letter instead of a number, the game\n"
                "                 crashes.\n");
+        printf("\n");
+        printf("                 The program will crash when any spaces or non asked\n"
+               "                 characters are inserted in a question.\n");
+        printf("\n");
         printf("Github page    : https://github.com/FardelusDeletus/N-W-S\n");
         printf("======================================================================\n");
         system("PAUSE");
@@ -276,7 +334,7 @@ void infoMenu(int Choice) {
 } //This function shows the Info Menu
 
 void aboutUsMenu(int Choice) {
-   if (Choice == 4) {
+    if (Choice == 3) {
         system("CLS");
 
         printf("======================================================================\n");
@@ -372,11 +430,13 @@ void showGrid() {
     }
 } //This function shows the grid
 
-void shoot(char name, int i) {
+void shoot(char *name, int i) {
     int target_line = 0, target_col = 0, shots_fired = 0, missed_shots = 0, total_hp = TOTAL_HEALTH, recon_hp = RECON_HEALTH, enforcer_hp = ENFORCER_HEALTH,
             submarines_hp = SUBMARINES_HEALTH, cruiser_hp = CRUISER_HEALTH, carrier_hp = CARRIER_HEALTH, win_game;
 
-    char name_transfer = name;
+    char name_transfer[TAILLE_MAX];
+
+    strcpy(name_transfer, name);
 
     do {
 
@@ -387,7 +447,7 @@ void shoot(char name, int i) {
         printf("[Radio Command] It's your turn, choose a target.\n");
 
         do { //This will make sure the user doesn't crash the game by inputing a wrong number
-        printf("Column : ");
+            printf("Column : ");
             scanf("%d", &target_col);
             target_col =
                     target_col -
@@ -405,10 +465,10 @@ void shoot(char name, int i) {
                     target_line -
                     ARRAY_ADJUSTER; //Remove 1 from the choice to make sure it respects the array's standards
 
-                    if (target_line > 8){
-                        printf("[Radio Command] Hum... Sir this isn't in the range, the range is of 9.\n");
-                    }
-        }while(target_line > 8);
+            if (target_line > 8) {
+                printf("[Radio Command] Hum... Sir this isn't in the range, the range is of 9.\n");
+            }
+        } while (target_line > 8);
 
         printf("[READY TO FIRE] press any key to fire\n");
         getch();
@@ -431,8 +491,13 @@ void shoot(char name, int i) {
                 } else {
                     if (StaticMap[target_line][target_col] == 7) {
                         submarines_hp = submarines_hp - 1;
-                        if (submarines_hp == 0) {
-                            printf("[Radio Command] Hostile submarines have been destroyed !\n");
+
+                        if (submarines_hp == 3) {
+                            printf("[Radio Command] We got one of their submarines !\n");
+                        } else {
+                            if (submarines_hp == 0) {
+                                printf("[Radio Command] Hostile submarines have been destroyed !\n");
+                            }
                         }
                     } else {
                         if (StaticMap[target_line][target_col] == 8) {
@@ -444,7 +509,7 @@ void shoot(char name, int i) {
                             if (StaticMap[target_line][target_col] == 9) {
                                 carrier_hp = carrier_hp - 1;
                                 if (carrier_hp == 0) {
-                                    printf("[Radio Command] We destroyed their carrier !");
+                                    printf("[Radio Command] We destroyed their carrier !\n");
                                 }
                             }
                         }
@@ -460,7 +525,11 @@ void shoot(char name, int i) {
             if (StaticMap[target_line][target_col] == 1) {
                 printf("[Radio Command] Target missed, we'll get 'em next time !\n");
                 StaticMap[target_line][target_col] = 2;
+
+                shots_fired = shots_fired + 1;
+                missed_shots = missed_shots + 1;
             } else {
+
                 if (StaticMap[target_line][target_col] == 2 || StaticMap[target_line][target_col] == 3) {
                     printf("[Radio Command] We already shot here...\n");
                 }
@@ -471,18 +540,18 @@ void shoot(char name, int i) {
 
         win_game = winningCondition(shots_fired, missed_shots, total_hp, name_transfer);
 
-        system("PAUSE");
+        showScoreboard();
 
     } while (win_game != 1);
 } //This function lets the player shoot
 
 void play(int Choice) {
 
-    if (Choice == 5) {
+    if (Choice == 4) {
 
         int i = 0;
 
-        char name;
+        char name[TAILLE_MAX];
 
         system("CLS");
 
@@ -495,10 +564,9 @@ void play(int Choice) {
         printf("   marked with symbols, here's the meaning of each one of them :\n");
         printf("\t- [X] means that you shot but missed\n");
         printf("\t- [O] means that you shot and hit a boat\n");
-        printf("\t- [S] means that the case is a sunken boat\n");
         printf("======================================================================\n");
         printf("What is your name captain ? (Please do not input spaces)");
-        scanf("%s", &name);
+        scanf("%s", name);
 
         shoot(name, i);
 
@@ -511,11 +579,11 @@ int main() {
 
     do { //This while loop will keep repeating until an option is chosen or the user quits by typing [6]
         printf("======================================================================\n"); //showing the main interface
-        printf("                **     *    *           *      ***** \n");
-        printf("                * *    *     *         *      *      \n");
-        printf("                *  *   *      *       *        ****  \n");
-        printf("                *   *  *       *  *  *             * \n");
-        printf("                *    * *   .    *   *      .  *****  .\n");
+        printf("                __/___            \n"
+               "          _____/______|           \n"
+               "  _______/_____\\_______\\_____     \n"
+               "  \\              < < <       |    \n"
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("======================================================================\n");
         printf("Version\t: 1.0\n");
         printf("Author\t: Fardel Bastien\n");
@@ -530,15 +598,14 @@ int main() {
         printf("======================================================================\n");
 
         helpMenu(Choice); //Calls upon the HelpMenu function
-        settingsMenu(Choice); //Calls upon the settingsMenu function
         infoMenu(Choice); //Calls upon the infoMenu function
         aboutUsMenu(Choice); //Calls upon the aboutUsMenu function
         play(Choice); //Calls upon the play function
 
-        if (Choice > 6 || Choice <= 0) {
+        if (Choice > 5 || Choice <= 0) {
             printf("\t\t    [!] This isn't an option [!]\n");
         }
-    } while (Choice != 6);
+    } while (Choice != 5);
 
     return 0;
 }
