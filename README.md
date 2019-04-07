@@ -4,7 +4,8 @@ A naval battle game made with CLion for my learning
 Author        : Fardel Bastien
 Beta testers  : Gacon Kevin 
 Address       : Bastien.FARDEL@cpnv.ch
-Version       : 1.0
+Version       : 2.0
+
 
 -- How to install this game ? -- 
 Create a new file and name it cmake-build-debug and put the downloaded content (release) in it.
