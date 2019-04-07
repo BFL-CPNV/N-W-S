@@ -7,9 +7,8 @@ Address       : Bastien.FARDEL@cpnv.ch
 Version       : 1.0
 
 -- How to install this game ? -- 
-There's no need to install the game as it
-is a .exe, just copy and paste the .exe 
-on your computer and launch it.
+Download the file N.W.S and launch the .exe located in
+cmake-build-debug.
 
 -- If I need help, how should I contact the author ? --
 You can either use the email given at the top of the note
