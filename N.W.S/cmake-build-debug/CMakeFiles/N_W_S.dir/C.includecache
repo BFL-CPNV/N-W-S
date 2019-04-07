@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/basti/OneDrive/Bureau/N.W.S/main.c
+stdio.h
+-
+conio.h
+-
+stdlib.h
+-
+string.h
+-
+
